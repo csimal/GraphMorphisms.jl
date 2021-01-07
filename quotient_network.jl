@@ -86,29 +86,3 @@ A = float(adjacency_matrix(g))
 λ, V = eigen(Array(A))
 [V[allclasses,i] for i in 1:34 if any(abs.(V[:,i]) .< 1e-6) ]
 
-function test(N)
-    p = 0.75
-    fails = []
-    for i in 1:100
-        h = erdos_renyi(N,p)
-        cs2, v = network_automorphism_classes(h)
-        if !checkclasses(h,cs2)
-            #println("Oh no!")
-            push!(fails, (h,cs2,v))
-        end
-    end
-    return fails
-end
-
-N = 20
-t = test(N)
-
-using GraphPlot
-
-h = t[1][1]
-t[1][2]
-t[1][3]
-
-gplot(t[1][1], nodelabel = 1:N)
-neighbors(h, 8)
-neighbors(h, 15)
